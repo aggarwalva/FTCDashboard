@@ -3,7 +3,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Server {
+public class BasicServer {
     public static void main(String[] args){
         ServerSocket server = null;
         Socket client = null;
@@ -31,11 +31,11 @@ public class Server {
             e.printStackTrace();
         }
 
-        while(!input.equals("exit")){
+        while(!input.equals("kill server")){
             try{
                 input = sc.readLine();
                 out.println(input);
-                System.out.println(input);
+                //System.out.println(input);
                 //System.out.println("Recieved data: " + in.readLine());
             } catch (Exception e){
                 e.printStackTrace();
