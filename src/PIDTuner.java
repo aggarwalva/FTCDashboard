@@ -53,8 +53,8 @@ public class PIDTuner extends Frame implements ActionListener,WindowListener{
         out = null;
 
         try {
-            server = new ServerSocket(4321);
-            client = server.accept();
+            //server = new ServerSocket(4321);
+            client = new Socket("192.168.49.1",4321);
         } catch (IOException e) {
             e.printStackTrace();
         }
