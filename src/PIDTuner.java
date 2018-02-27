@@ -12,6 +12,7 @@ public class PIDTuner extends Frame implements ActionListener,WindowListener{
     Button set;
     TextField pText, iText, dText;
     PrintWriter out;
+    boolean connected = false;
 
     public static void main(String[] args){
         PIDTuner instance = new PIDTuner();
@@ -52,11 +53,14 @@ public class PIDTuner extends Frame implements ActionListener,WindowListener{
 
         out = null;
 
-        try {
-            //server = new ServerSocket(4321);
-            client = new Socket("192.168.49.1",4321);
-        } catch (IOException e) {
-            e.printStackTrace();
+        while(!connected){
+            try {
+                //server = new ServerSocket(4321);
+                client = new Socket("192.168.49.1",4321);
+                connected = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         try{
@@ -74,8 +78,12 @@ public class PIDTuner extends Frame implements ActionListener,WindowListener{
             kI = Double.parseDouble(iText.getText());
             kD = Double.parseDouble(dText.getText());
 
-            System.out.println("kP: " + kP + " kI: " + kI + " kD: " + kD);
-            out.println(kP + "\n" + kI + "\n" + kD);
+            if(connected){
+                System.out.println("kP: " + kP + " kI: " + kI + " kD: " + kD);
+                out.println(kP + "\n" + kI + "\n" + kD);
+            } else{
+                System.out.println("Not connected to server");
+            }
         } catch (Exception ex){
             kP = 0;
             kI = 0;

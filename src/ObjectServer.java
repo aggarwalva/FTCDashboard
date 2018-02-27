@@ -44,6 +44,12 @@ public class ObjectServer {
             }
         }
 
+        try {
+            //client.shutdownOutput();
+            client.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.exit(0);
     }
 }

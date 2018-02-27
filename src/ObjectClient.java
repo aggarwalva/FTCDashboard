@@ -5,18 +5,26 @@ import java.util.Scanner;
 
 public class ObjectClient {
     public static void main(String[] args){
-        String input = "", recievedData;
+        Socket client = null;
+        String input = "", receivedData;
         DataObject data;
         BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
         ObjectInputStream in = null;
         PrintWriter out = null;
-        try {
-            Socket client = new Socket("localhost", 4321);
-            in = new ObjectInputStream(client.getInputStream());
-            out = new PrintWriter(client.getOutputStream(),
-                    true);
-        } catch (IOException e) {
-            e.printStackTrace();
+        boolean connected = false;
+
+        System.out.println("Waiting for server");
+        while(!connected){
+            try {
+                client = new Socket("localhost", 4321);
+                in = new ObjectInputStream(client.getInputStream());
+                out = new PrintWriter(client.getOutputStream(),
+                        true);
+                System.out.println("Connected to server");
+                connected = true;
+            } catch (IOException e) {
+
+            }
         }
 
         while(!input.equals("exit")){
@@ -33,11 +41,14 @@ public class ObjectClient {
                     }
                     if(!data.getData().equals("kill server")){
                         System.out.println("Received " + data.getName() + ": " + data.getData());
-                        System.out.println("Available: " + available);
+                        //System.out.println("Available: " + available);
                     }
                 }
             } catch (Exception e){
                 System.out.println("Client Side Error: " + e.getMessage());
+                    if(e.getMessage().equals(null)){
+                        System.exit(0);
+                    }
             }
         }
     }
