@@ -32,8 +32,7 @@ public class ObjectClient {
                 if(sc.ready()){
                     input = sc.readLine();
                 }
-                if(true){
-                    int available = in.available();
+                if(client.getInputStream().available() > 0){
                     data = (DataObject) in.readObject();
                     if(data.getData().equals("kill client")) {
                         input = "exit";
@@ -41,7 +40,7 @@ public class ObjectClient {
                     }
                     if(!data.getData().equals("kill server")){
                         System.out.println("Received " + data.getName() + ": " + data.getData());
-                        //System.out.println("Available: " + available);
+                        //System.out.println("Available: " + client.getInputStream().available());
                     }
                 }
             } catch (Exception e){

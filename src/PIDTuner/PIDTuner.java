@@ -1,3 +1,6 @@
+package PIDTuner;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +14,9 @@ public class PIDTuner extends Frame implements ActionListener,WindowListener{
     double kP, kI, kD;
     Button set;
     TextField pText, iText, dText;
-    PrintWriter out;
+    ObjectOutputStream out;
     boolean connected = false;
+    PIDTunable tunable = null;
 
     public static void main(String[] args){
         PIDTuner instance = new PIDTuner();
@@ -64,8 +68,7 @@ public class PIDTuner extends Frame implements ActionListener,WindowListener{
         }
 
         try{
-            out = new PrintWriter(client.getOutputStream(),
-                    true);
+            out = new ObjectOutputStream(client.getOutputStream());
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -80,9 +83,14 @@ public class PIDTuner extends Frame implements ActionListener,WindowListener{
 
             if(connected){
                 System.out.println("kP: " + kP + " kI: " + kI + " kD: " + kD);
-                out.println(kP + "\n" + kI + "\n" + kD);
+                tunable = new PIDTunable(kP, kI, kD);
+                out.writeObject(tunable);
             } else{
                 System.out.println("Not connected to server");
+//                PopupFactory popupFactory = new PopupFactory();
+//                Popup popup = popupFactory.getPopup(this, new TextField("Warning: Not Connected to Server"), 100, 100);
+//                popup.show();
+                JOptionPane.showMessageDialog(this, "Not Connected to Server", "Warning", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex){
             kP = 0;
