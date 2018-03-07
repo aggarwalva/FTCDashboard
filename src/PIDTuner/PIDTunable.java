@@ -18,7 +18,7 @@ public class PIDTunable implements Serializable{
         try {
             return d[i];
         } catch(Exception e){
-            System.out.println("Attempting to pull unindexed dashboard values");
+            //System.out.println("Attempting to pull unindexed dashboard values");
         }
         return 0;
     }

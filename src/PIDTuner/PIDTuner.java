@@ -84,7 +84,9 @@ public class PIDTuner extends Frame implements ActionListener,WindowListener{
             if(connected){
                 System.out.println("kP: " + kP + " kI: " + kI + " kD: " + kD);
                 tunable = new PIDTunable(kP, kI, kD);
-                out.writeObject(tunable);
+                DataObject data = new DataObject("Data", Double.toString(kP));
+                //out.defaultWriteObject();
+                out.writeObject(data);
             } else{
                 System.out.println("Not connected to server");
 //                PopupFactory popupFactory = new PopupFactory();

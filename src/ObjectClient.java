@@ -1,7 +1,7 @@
-import javax.xml.crypto.Data;
+import PIDTuner.DataObject;
+
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
 
 public class ObjectClient {
     public static void main(String[] args){
